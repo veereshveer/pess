@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+@import url("https://use.fontawesome.com/releases/v5.6.3/css/all.css");
+@import "./app/header/header";
+@import "./app/sidebar/sidebar";
+@import "./app/route-components/department/department";
+@import "./app/route-components/employee/employee";
+@import "./app/route-components/project/project";
+@import "./app/route-components/report/report";
+@import "./app/route-components/result/result";
+@import "./app/route-components/search/search";
+// @import url("https://cdn.syncfusion.com/ej2/material.css");

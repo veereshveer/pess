@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-1">
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <form name="searchDetails" id="searchDetails">
+
+            <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                <label class="control-label" for="employeeName"> Employee Name </label>
+                <input type="text"  [(ngModel)]="employeeName" name="employeeName" id="employeeName" class="form-control"
+                    maxlength="128" placeholder="Provide emplyee name"/>
+            </div>
+
+            <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                <label class="control-label" for="employeeCode">Employee Code</label>
+                <input type="text"  [(ngModel)]="employeeCode" name="employeeCode" id="employeeCode" class="form-control"
+                    maxlength="128" placeholder="Provide employee code"/>
+            </div>
+
+            <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                <label class="control-label" for="projectName"> Project Name </label>
+                <input type="text"  [(ngModel)]="projectName" name="projectName" id="projectName" class="form-control"
+                    maxlength="64" placeholder="Provide project name"/>
+            </div>
+
+            <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                <label class="control-label" for="projectCode">Project Code</label>
+                <input type="text"  [(ngModel)]="projectCode" name="projectCode" id="projectCode" class="form-control"
+                    maxlength="64" placeholder="Provide project code"/>
+            </div>
+
+            <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                <label class="control-label" for="departmentname">Department Name</label>
+                <input type="text"  [(ngModel)]="departmentname" name="departmentname" id="departmentname" class="form-control"
+                    maxlength="64" placeholder="Provide department name"/>
+            </div>
+
+            <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                <label class="control-label" for="departmentCode">Department Code</label>
+                <input type="text"  [(ngModel)]="departmentCode" name="departmentCode" id="departmentCode" class="form-control"
+                    maxlength="64" placeholder="Provide department Code "/>
+            </div>
+        </form>
+        <div class="fa-pull-right">
+            <button type="button" id="search" name="search" (click)="search()" class="btn btn-success btn-lg"> Search </button>
+        </div>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-10 d-none" >
+    <!-- [ngClass]="{'d-none': displaytable}"> -->
+    <table class="table table-bordered ">
+        <thead>
+          <tr>
+            <th>Employee Name</th>
+            <th>Email Id</th>
+            <th>Department name</th>
+            <th>Project name</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor= "let empDetail of empDetails" class="emp-{{empDetail.Id}}" >
+            <td>empDetail.empName</td>
+            <td>empDetail.empEmail</td>
+            <td>empDetail.empDeptName</td>
+            <td>empDetail.empProName</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+</div>

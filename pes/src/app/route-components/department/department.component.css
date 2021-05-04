@@ -1,0 +1,11 @@
+.modal.show {
+  display: block;
+}
+
+.add-department {
+  float: right;
+}
+
+.data-table {
+  margin-top: 30px;
+}/*# sourceMappingURL=department.component.css.map */

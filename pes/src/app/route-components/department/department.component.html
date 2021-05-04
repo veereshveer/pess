@@ -1,0 +1,96 @@
+<!-- Modal -->
+<div class="modal fade" [ngClass]="{'show': displayModal}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span (click)="displayModal = false" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form name="registerNewDepartmentForm" id="registerNewDepartmentForm">
+                <div class="modal-body">
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="entomodepartmentname">New Department Name *</label>
+                        <input type="text" [(ngModel)]="departmentName" name="entomodepartmentname"
+                            id="entomodepartmentname" class="form-control" maxlength="128"
+                            placeholder="Provide full name of the department"
+                            data-required-error="This is a mandatory field" required />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="departmentdescription">Department designation *</label>
+                        <input type="text" [(ngModel)]="departmentDescription" name="departmentdescription"
+                            id="departmentdescription" class="form-control" maxlength="128"
+                            placeholder="Provide description" data-required-error="This is a mandatory field"
+                            required />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="departmentlocation">Department location *</label>
+                        <input type="text" [(ngModel)]="departmentLocation" name="departmentlocation"
+                            id="departmentlocation" class="form-control" maxlength="64"
+                            placeholder="Provide location of the department"
+                            data-required-error="This is a mandatory field" required />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <input type="hidden" [(ngModel)]="departmentId" name="departmentId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="displayModal = false">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="saveDepartment()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+<div class="col-lg-10 col-md-10">
+    <button type="button" class="btn btn-primary add-department" (click)="refreshModel();displayModal = true">
+        Add Department
+    </button>
+</div>
+<br/>
+<div class="col-lg-10 col-md-10  data-table table-bordered">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hovers">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let department of departments; let i = index" class="detp-{{department.id}}">
+                <td>{{i+1}}</td>
+                <td>{{department.deptName}}</td>
+                <td><span (click)="loadDepartment(department.id); displayModal = true" class="fas fa-edit"></span> |
+                    <span (click)="deleteDepartment(department.id, department.deptName, i)" class="fas fa-trash"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- <select class="browser-default custom-select">
+    <option selected>Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <div class="row">
+    <div class="col-md-12">
+  
+      <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
+        <option value="" disabled selected>Choose your country</option>
+        <option value="1">USA</option>
+        <option value="2">Germany</option>
+        <option value="3">France</option>
+        <option value="4">Poland</option>
+        <option value="5">Japan</option>
+      </select>
+      <label class="mdb-main-label">Label example</label>
+      <button class="btn-save btn btn-primary btn-sm">Save</button>
+  
+    </div>
+  </div> -->

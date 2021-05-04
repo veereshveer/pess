@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <app-header [projectTitle]="title"></app-header>
+    <div class="row">
+        <div class="col-lg-2 col-md-2">
+            <app-sidebar [navigationMenu]="navigationMenu"></app-sidebar>
+        </div>
+        <div class="col-lg-10 col-md-10 content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
