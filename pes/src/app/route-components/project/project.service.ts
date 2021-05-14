@@ -10,22 +10,26 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getProjects = (id?: string) => {
+    let self = this;
     if (id) {
-      return this.http.get(this.url + id);
+      return self.http.get(self.url + id);
     } else {
-      return this.http.get(this.url);
+      return self.http.get(self.url);
     }
   }
 
-  addProject = (data : any) => {
-    return this.http.post(this.url, data);
+  addProject = (data: any) => {
+    let self = this;
+    return self.http.post(self.url, data);
   }
 
-  updateProject = (data : any) => {
-    return this.http.put(this.url, data);
+  updateProject = (data: any, id: any) => {
+    let self = this;
+    return self.http.put(self.url + id, data);
   }
   deleteProject = (id: string) => {
-    return this.http.delete(this.url + id);
+    let self = this;
+    return self.http.delete(self.url + id);
   }
 
 }

@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { RouterModule, Routes } from '@angular/router';
-import { MultiSelectAllModule } from '@syncfusion/ej2-angular-dropdowns';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 const routes: Routes = [
   {
@@ -25,7 +25,8 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     DataTablesModule,
-    MultiSelectAllModule
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
+
 export class EmployeeModule { }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, NgModel } from '@angular/forms';
@@ -22,9 +21,9 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    SearchRoutingModule,
     FormsModule,
-    DataTablesModule
+    DataTablesModule,
+    HttpClientModule
   ]
 })
 export class SearchModule { }

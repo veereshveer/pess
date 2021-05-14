@@ -5,9 +5,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SearchService {
-  url = 'http://localhost:8082/employee/';
+  url = 'http://localhost:8082/report/';
   constructor(private http : HttpClient) { }
-  search = (data : any) => {
-   return this.http.get(this.url+"getProCount", data)
+  search = (empName:any,empCode:any,proName:any,proCode:any,deptName:any) => {
+    let self = this;
+   return self.http.get(self.url+"Search/"+empName+"/"+empCode+"/"+proName+"/"+proCode+"/"+deptName)
   }
 }

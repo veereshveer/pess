@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'angular-highcharts';
+import { ReportService } from '../report/report.service';
 import { ResultService } from './result.service';
 
 @Component({
@@ -8,133 +9,185 @@ import { ResultService } from './result.service';
   styleUrls: ['./result.component.scss']
 })
 export class ResultComponent implements OnInit {
+  public deptSummary: any;
+  public resultAllDeatil: any;
+  public loadChart: any;
+  public chartType: any;
+  public chartData: any;
+  public deptName: string[] = [];
+  public deptData: number[] = [];
+  public proData: number[] = [];
+  public proName: string[] = [];
+  public empByProChart: any;
+  public empByDeptChart: any;
+  public empByJoinChart: any;
+  public allDeatil: any;
+  public ProSummary: any;
+  public joinSummary: any;
+  public joinData: number[] = [];
+  public joinDate: string[] = [];
 
-  allDeatil: any;
-  loadChart: any;
-  chartType: any;
-  chartData: any;
-  constructor(private service: ResultService) {
-    this.empByDeptChart();
-    this.empByproChart();
-    this.empByJoinChart();
+  constructor(private service: ResultService, private reportService: ReportService) {
+    let self = this;
+    self.getAllDeatils();
+    self.empDeptChart();
+    self.empProChart();
+    self.empJoinChart();
   }
 
   ngOnInit(): void {
   }
 
   getAllDeatils = () => {
-    this.service.allDeatils()
+    let self = this;
+    self.reportService.getDetails()
       .subscribe((response) => {
-        this.allDeatil = response
+        self.resultAllDeatil = response;
       }, (err) => {
         console.log(err);
       }
       )
   }
 
-  empByDeptChart() {
-    this.service.getEmpByDeptData()
+  empDeptChart() {
+    let self = this;
+    self.reportService.getDeptSummary()
       .subscribe((response) => {
-        this.chartData = response,
-        this.chartType=
-      }, (err) => {
-        console.log(err);
-      })
-  }
-  empByproChart() {
-    this.service.getEmpByProData()
-      .subscribe((response) => {
-        this.allDeatil = response
-      }, (err) => {
-        console.log(err);
-      })
-  }
-  empByJoinChart() {
-    this.service.getEmpByJoindata()
-      .subscribe((response) => {
-        this.allDeatil = response
+        self.deptSummary = response;
+        for (var val of self.deptSummary) {
+
+          self.deptData.push(val.countEmpDept);
+          self.deptName.push(val.deptName);
+        }
+        self.loadDeptChart(self.deptData, self.deptName);
       }, (err) => {
         console.log(err);
       })
   }
 
-  loadChartData(){
-    this.loadChart = new Chart({
+  empJoinChart() {
+    let self = this;
+    self.service.getEmpByJoindata()
+      .subscribe((response) => {
+        self.joinSummary = response;
+        for (var val of self.joinSummary) {
+          self.joinData.push(val.empCount);
+          self.joinDate.push(val.joinDate);
+        }
+        console.log(self.joinData);
+        console.log(self.joinDate);
+        self.loadJoinChart(self.joinData, self.joinDate);
+      }, (err) => {
+        console.log(err);
+      })
+  }
+
+  loadDeptChart = (data: any, name: any) => {
+    let self = this;
+    self.empByDeptChart = new Chart({
       chart: {
-        type: this.chartType
+        type: 'column'
       },
       title: {
-        text: 'Line Chart'
+        text: 'Employee by departments'
       },
       credits: {
         enabled: false
       },
       series: [
         {
-          name: 'Line 1',
-          type: this.chartType,
-          data: this.chartData
-  
+          name: " Department names",
+          type: 'column',
+          data: data,
+
         }
-      ]
+      ],
+      yAxis: [{
+        title: {
+          text: 'Range of employees'
+        },
+      }],
+      xAxis: {
+        categories: name,
+      },
+      colors: ['cadetblue', 'red', 'green'],
+    });
+  }
+  loadJoinChart(data: any, date: any) {
+    let  self  = this;
+    self.empByJoinChart = new Chart({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: 'Employee Joindata'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [
+        {
+          name: "Employee join date",
+          type: 'line',
+          data: data
+        }
+      ],
+      yAxis: [{
+        title: {
+          text: 'Number of employees'
+        },
+      }],
+      xAxis: {
+        categories: date,
+      },
+      colors: ['cadetblue', 'red', 'green'],
     });
   }
 
-  // empProChart = new Chart({
-  //   chart: {
-  //     type: 'bar'
-  //   },
-  //   title: {
-  //     text: 'Employee by Department'
-  //   },
-  //   credits: {
-  //     enabled: false
-  //   },
-  //   series: [
-  //     {
-  //       name: 'Line 1',
-  //       type: 'bar',
-  //       data: [1, 2, 3]
+  empProChart() {
+    let self = this;
+    self.reportService.getProSummary()
+      .subscribe((response) => {
+        self.ProSummary = response;
+        for (var val of self.ProSummary) {
+          self.proData.push(val.countEmpPro);
+          self.proName.push(val.proName);
+        }
+        self.loadProChart(self.proData, self.proName);
+      }, (err) => {
+        console.log(err);
+      })
+  }
 
-  //     }
-  //   ]
-  // });
-  // empDeptChart = new Chart({
-  //   chart: {
-  //     type: 'bar'
-  //   },
-  //   title: {
-  //     text: 'Employee by project'
-  //   },
-  //   credits: {
-  //     enabled: false
-  //   },
-  //   series: [
-  //     {
-  //       name: 'Barchart',
-  //       type: 'bar',
-  //       data: [1, 2, 3]
+  loadProChart(data: any, name: any) {
+    let self = this;
+    self.empByProChart = new Chart({
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Employee by project'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [
+        {
+          name: "Project names",
+          type: 'column',
+          data: data
+        }
+      ],
+      yAxis: [{
+        title: {
+          text: 'Number of employees'
+        },
+      }],
+      xAxis: {
+        categories: name,
+      },
+      colors: ['cadetblue', 'red', 'green'],
+    });
+  }
 
-  //     }
-  //   ]
-  // });
-  // empJoinChart = new Chart({
-  //   chart: {
-  //     type: 'line'
-  //   },
-  //   title: {
-  //     text: 'Line Chart'
-  //   },
-  //   credits: {
-  //     enabled: false
-  //   },
-  //   series: [
-  //     {
-  //       name: 'Line 1',
-  //       type: 'line',
-  //       data: [1, 2, 3, 4, 5, 6]
-
-  //     }
-  //   ]
-  // });
 }

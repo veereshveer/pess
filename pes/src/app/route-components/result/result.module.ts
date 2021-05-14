@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ResultRoutingModule } from './result-routing.module';
 import { ResultComponent } from './result.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartModule } from 'angular-highcharts';
@@ -12,6 +11,7 @@ const routes: Routes = [
     component: ResultComponent
   }
 ];
+
 @NgModule({
   declarations: [
     ResultComponent
@@ -19,7 +19,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    ResultRoutingModule,
     ChartModule
   ]
 })

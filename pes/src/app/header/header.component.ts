@@ -8,9 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() projectTitle = "";
   date = new Date();
+  
   constructor() {
+    let self = this;
     setInterval(() => {
-      this.date = new Date();
+      self.date = new Date();
     }, 1);
   }
 

@@ -8,11 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Employee Management';
   navigationMenu = [
+    // {'name': 'login', 'route': 'login'},
     {'name': 'Department', 'route': ''},
     {'name': 'Project', 'route': 'project'},
     {'name': 'Employee', 'route': 'employee'},
-    {'name': 'Search', 'route': 'search'},
     {'name': 'Report', 'route': 'report'},
-    {'name': 'Result', 'route': 'result'}
+    {'name': 'Result', 'route': 'result'},
+    {'name': 'Search', 'route': 'search'}
   ];
 }

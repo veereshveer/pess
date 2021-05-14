@@ -1,4 +1,3 @@
-
 <div class="modal fade" [ngClass]="{'show': displayModal}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -8,44 +7,39 @@
                     <span (click)="displayModal = false" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form name="registerNewProjectForm" id="registerNewProjectForm">
-                <div class="modal-body">
-                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                        <label class="control-label" for="projectName">New Project Name *</label>
-                        <input type="text" [(ngModel)]="projectName" name="projectName"
-                            id="projectName" class="form-control" maxlength="128"
-                            placeholder="Provide project name"
-                            data-required-error="This is a mandatory field" required />
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                        <label class="control-label" for="projectdescription">project designation *</label>
-                        <input type="text" [(ngModel)]="projectDescription" name="projectdescription"
-                            id="projectdescription" class="form-control" maxlength="128"
-                            placeholder="Provide project description" data-required-error="This is a mandatory field"
-                            required />
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <input type="hidden" [(ngModel)]="projectId" name="projectId" />
-                    <input type="hidden" [(ngModel)]="projectCode" name="projectCode" />
-
+            <div class="modal-body">
+                <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                    <label class="control-label" for="projectName">New Project Name *</label>
+                    <input type="text" [(ngModel)]="projectName" name="projectName" id="projectName"
+                        class="form-control" maxlength="128" placeholder="Provide project name"
+                        data-required-error="This is a mandatory field" required />
+                    <div class="help-block with-errors"></div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="displayModal = false">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="saveProject()">Save</button>
+                <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                    <label class="control-label" for="projectdescription">project designation *</label>
+                    <input type="text" [(ngModel)]="projectDescription" name="projectdescription"
+                        id="projectdescription" class="form-control" maxlength="128"
+                        placeholder="Provide project description" data-required-error="This is a mandatory field"
+                        required />
+                    <div class="help-block with-errors"></div>
                 </div>
-            </form>
+                <input type="hidden" [(ngModel)]="projectId" name="projectId" />
+                <input type="hidden" [(ngModel)]="projectCode" name="projectCode" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="displayModal = false">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="saveProject()">Save</button>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Button trigger modal -->
- <div class="col-lg-10 col-md-10">
+<div class="col-lg-10 col-md-10">
     <button type="button" class="btn btn-primary add-Project" (click)="refreshModel();displayModal = true">
         Add Project
     </button>
 </div>
-<br/>
+<br />
 <div class="col-lg-10 col-md-10  data-table table-bordered">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hovers">
         <thead>
@@ -56,13 +50,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let project of projects; let i = index" class="detp-{{project.id}}">
+            <tr *ngFor="let project of projects; let i = index" class="detp-{{project.projectId}}">
                 <td>{{i+1}}</td>
-                <td>{{project.proName}}</td>
-                <td><span (click)="loadProject(project.id); displayModal = true" class="fas fa-edit"></span> |
-                    <span (click)="deleteProject(project.id, project.proName, i)" class="fas fa-trash"></span>
+                <td>{{project.name}}</td>
+                <td><span (click)="loadProject(project.projectId); displayModal = true" class="fas fa-edit"></span> |
+                    <span (click)="deleteProject(project.projectId, project.name, i)" class="fas fa-trash"></span>
                 </td>
             </tr>
         </tbody>
     </table>
-</div> 
+</div>

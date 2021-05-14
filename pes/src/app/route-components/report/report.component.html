@@ -1,81 +1,81 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-8" style="margin-top:  5%;">
+        <div class="col-lg-11 col-md-11 col-sm-12">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <h3> Summary</h3>
-                    <form *ngFor="let count of counts">
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-6 col-form-label">No. of Employees</label>
-                            <div class="col-sm-6 ">
-                                <input type="text" class="form-control" id="" value="{{count.emp}}" disabled>
-                            </div>
+                    <div class="form-group row ">
+                        <div class="col-lg-2 col-md-2"></div>
+                        <label for="inputEmail3" class="col-lg-4 col-md-4 col-sm-6 col-form-label">No. of
+                            Employee :</label>
+                        <div class="col-lg-2 col-md-2 col-sm-4 ">
+                            <input type="text" class="form-control" id="empCount" name="empCount"
+                                value="{{counts.empCount}}" disabled>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-6 col-form-label">No. of Departs</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="" value="{{count.dept}}" disabled>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-2"></div>
+                        <label class="col-lg-4 col-md-4 col-sm-6 col-form-label">No. of Departs :</label>
+                        <div class="col-lg-2 col-md-2 col-sm-4">
+                            <input type="text" class="form-control" id="deptCount" name="deptCount"
+                                value="{{counts.deptCount}}" disabled>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-6 col-form-label">No. of Projects</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="" value="{{count.pro}}">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-2"></div>
+                        <label class="col-lg-4 col-md-4 col-sm-6 col-form-label">No. of Projects :</label>
+                        <div class="col-lg-2 col-md-2 col-sm-4">
+                            <input type="text" class="form-control" id="proCount" name="proCount"
+                                value="{{counts.proCount}}" disabled>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
-                    <!-- <img src="../Pictures/Nature.jpg" width="450" height="333"> -->
                     <div [chart]="chart"></div>
                 </div>
             </div>
             <div class="row">
-                <div *ngFor="let empCount of summary">
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="column">
-                            <h3> Department Summary</h3>
-                            <table class="table table-striped">
-                                <tr>
-                                    <th>Department Name</th>
-                                    <th>Count of Employees</th>
-                                </tr>
-                                <tr>
-                                    <td>{{empCount.deptName}}</td>
-                                    <td>{{empCount.deptCount}}</td>
-
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 ">
-                        <h3>
-                            Project Summary</h3>
-                        <table class="table table-striped">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="column">
+                        <h3> Department Summary</h3>
+                        <table class="table table-striped table-bordered">
                             <tr>
-                                <th>Project Name</th>
+                                <th>Department Name</th>
                                 <th>Count of Employees</th>
                             </tr>
-                            <tr>
-                                <td>{{empCount.proName}}</td>
-                                <td>{{empCount.proCount}}</td>
+                            <tr *ngFor="let empCount of deptSummary">
+                                <td>{{empCount.deptName}}</td>
+                                <td>{{empCount.countEmpDept}}</td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 3%;">
+                <div class="col-lg-6 col-md-6 col-sm-12 ">
                     <h3>
-                        All Details </h3>
-                    <table class="table table-striped" *ngFor="let empdetail of details">
+                        Project Summary</h3>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Count of Employees</th>
+                        </tr>
+                        <tr *ngFor="let proCount of proSummary">
+                            <td>{{proCount.proName}}</td>
+                            <td>{{proCount.countEmpPro}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h3> All Details </h3>
+                    <table class="table table-striped table-bordered table-hover">
                         <tr>
                             <th>Employee Name</th>
                             <th>Employee Email</th>
                             <th>Department Name</th>
                             <th>Project Name</th>
                         </tr>
-                        <tr>
-                            <td>{{empdetail.empName}}</td>
-                            <td>{{empdetail.empEmail}}</td>
+                        <tr *ngFor="let empdetail of details">
+                            <td>{{empdetail.name}}</td>
+                            <td>{{empdetail.email}}</td>
                             <td>{{empdetail.deptName}}</td>
                             <td>{{empdetail.proName}}</td>
                         </tr>

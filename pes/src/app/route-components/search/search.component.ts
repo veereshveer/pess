@@ -7,31 +7,47 @@ import { SearchService } from './search.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  employeeName : any ;
-  employeeCode : any ;
-  projectName : any ;
-  projectCode : any ;
-  departmentname : any ;
-  departmentCode : any ;
-  empDetails : any ;
-  displaytable: any;
+
+  public employeeName : String = '' ;
+  public employeeCode : String = '' ;
+  public projectName : String = '' ;
+  public projectCode : String = '' ;
+  public departmentName : String = '' ;
+  public empDetails : any = [] ;
+  public display: String ="";
+  public resultModel:boolean=false;
+  public name : String = '';
+  public empCode: String = '';
+  public email: String = '';
+  public deptName: String = '';
+  public proName: String = '';
+
   constructor(private service : SearchService) { }
 
   ngOnInit(): void {
   }
   search = () => {
-  this.service.search({
-    "employeeName" : this.employeeName,
-    "employeeCode" : this.departmentCode,
-    "projectName"  : this.projectName,
-    "projectCode"  : this.projectCode,
-    "departmentname" : this.departmentname,
-    "departmentCode" : this.departmentCode
-  })
+    let self = this;
+  self.service.search(
+    self.employeeName,
+    self.employeeCode,
+    self.projectName,
+    self.projectCode,
+    self.departmentName
+  )
   .subscribe((response) =>{
-    this.empDetails = response;
+    self.empDetails=response;
+    console.log(self.empDetails);
+    self.name=self.empDetails.name,
+    self.empCode=self.empDetails.empCode,
+    self.email=self.empDetails.email,
+    self.deptName=self.empDetails.deptName,
+    self.proName=self.empDetails.proName,
+    self.resultModel=true;
+    self.display="";
   }, (err) => {
     console.log(err);
+    self.display="";
   })
 }
 }

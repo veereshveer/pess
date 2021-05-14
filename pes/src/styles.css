@@ -1,3 +1,120 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.css';
-@import url("https://use.fontawesome.com/releases/v5.6.3/css/all.css");/*# sourceMappingURL=styles.css.map */
+@import url("https://use.fontawesome.com/releases/v5.6.3/css/all.css");
+.header {
+  border: 1px solid black;
+  background-color: #47626b;
+}
+
+.logo {
+  height: 98px;
+}
+
+.project-title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.sidebar {
+  height: 500px;
+  border: 1px solid black;
+}
+
+.navigation-menu {
+  border: 1px solid black;
+}
+
+.navigation-menu a {
+  width: 100%;
+}
+
+.navigation-menu.active {
+  background-color: gray;
+}
+
+H3 {
+  background-color: #47626b;
+  border: black;
+  text-align: center;
+  color: white;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+#login .container #login-row #login-column #login-box {
+  margin-top: 50px;
+  max-width: 600px;
+  height: 320px;
+  border: 1px solid #9c9c9c;
+  background-color: #eaeaea;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+.btn-md {
+  float: right;
+}
+
+.modal.show {
+  display: block;
+}
+
+.add-department {
+  float: right;
+}
+
+.data-table {
+  margin-top: 30px;
+}
+
+.modal.show {
+  display: block;
+}
+
+.add-employee {
+  float: right;
+}
+
+.data-table {
+  margin-top: 30px;
+}
+
+.modal.show {
+  display: block;
+}
+
+.add-Project {
+  float: right;
+}
+
+.data-table {
+  margin-top: 30px;
+}
+
+H3 {
+  background-color: #47626b;
+  border: black;
+  text-align: center;
+  color: white;
+}
+
+.col-form-label {
+  float: right;
+}
+
+H3 {
+  background-color: #47626b;
+  border: black;
+  text-align: center;
+  color: white;
+}/*# sourceMappingURL=styles.css.map */

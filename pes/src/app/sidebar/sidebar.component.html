@@ -1,8 +1,8 @@
 <div class="wrapper sidebar">
     <nav id="sidebar">
         <ul class="list-unstyled components">
-            <li class="navigation-menu"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngFor="let menu of navigationMenu">
-                <a class="btn btn-default" routerLink={{menu.route}}>{{menu.name}}</a>
+            <li class="navigation-menu"   *ngFor="let menu of navigationMenu">
+                <a class="btn btn-outline-secondary sidebar-btn" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink={{menu.route}}>{{menu.name}}</a>
             </li>
         </ul>
     </nav>

@@ -8,71 +8,103 @@ import { Chart } from 'angular-highcharts';
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
-export class ReportComponent implements OnInit {
-  counts: any;
-  dtTrigger: any;
-  summary: any;
-  details: any;
 
-  constructor( private service : ReportService) {
-      this.loadcount();
-      this.loadsummary();
-      this.loadDetails();
-   }
+export class ReportComponent implements OnInit {
+
+  public counts: any=[];
+  public dtTrigger: any;
+  public proSummary: any=[];
+  public deptSummary: any=[];
+  public details: any=[];
+  public chart: any;
+  public data: any=[];
+
+  constructor(private service: ReportService) {
+    let slef = this;
+    slef.loadcount();
+    slef.loadDeptSummary();
+    slef.loadProSummary();
+    slef.loadDetails();
+  }
 
   ngOnInit(): void {
   }
-   loadcount = () => {
-    this.service.getCount ()
-    .then((response) =>{
-      this.counts = response;
-      console.log(response);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+
+  loadcount = () => {
+    let self = this;
+    self.service.getCount()
+      .then((response) => {
+        self.counts = response;
+        self.data = [self.counts.empCount, self.counts.deptCount, self.counts.proCount]
+        self.loadchart(self.data);
+        console.log(self.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
-  
-   loadsummary = () => {
-    this.service.getSummary ()
-    .subscribe((response) =>{
-      this.summary = response;
-      console.log(response);
-    }, (err) => {
-      console.log(err);
-    })
+
+  loadDeptSummary = () => {
+    let self = this;
+    self.service.getDeptSummary()
+      .subscribe((response) => {
+        self.deptSummary = response;
+        console.log(response);
+      }, (err) => {
+        console.log(err);
+      })
   }
-  
+
+  loadProSummary = () => {
+    let self = this;
+    self.service.getProSummary()
+      .subscribe((response) => {
+        self.proSummary = response;
+        console.log(response);
+      }, (err) => {
+        console.log(err);
+      })
+  }
+
   loadDetails = () => {
-    this.service.getDetails ()
-    .subscribe((response) =>{
-      this.details = response;
-      console.log(response);
-    }, (err) => {
-      console.log(err);
-    })
+    let self = this;
+    self.service.getDetails()
+      .subscribe((response) => {
+        self.details = response;
+        console.log(response);
+      }, (err) => {
+        console.log(err);
+      })
   }
-  
-  chart = new Chart({
-    chart: {
-      type: 'bar'
-    },
-    title: {
-      text: 'Barchart'
-    },
-    credits: {
-      enabled: false
-    },
-    series: [
-      {
-        name: 'Line 1',
-        type : 'bar',
-        data: [1, 2, 3]
-      
-      }
-    ]
-  });
- 
+
+  loadchart = (data: any) => {
+    let self = this;
+    self.chart = new Chart({
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Office management'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [
+        {
+          name: "Modules",
+          type: 'column',
+          data: data,
+        }
+      ],
+      yAxis: [{
+        title: {
+          text: 'Number of employees'
+        },
+      }],
+      xAxis: {
+        categories: ['No.of Employee', 'No.of Department', 'No.of Project']
+      },
+      colors: ['cadetblue', 'red', 'green'],
+    });
+  }
 }
-
-

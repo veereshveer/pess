@@ -9,12 +9,12 @@ import { DepartmentService } from './department.service';
   styleUrls: ['./department.component.scss']
 })
 export class DepartmentComponent implements OnInit {
-  displayModal = false;
-  departmentId = '';
-  departmentName = '';
-  departmentDescription = '';
-  departmentLocation = '';
-  departments: any;
+  displayModal:boolean = false;
+  departmentId : String = '';
+  departmentName: String = '';
+  departmentDescription: String = '';
+  departmentLocation : String = '';
+  departments: any=[];
 
   @ViewChild(DataTableDirective)
   dtElement!: DataTableDirective;
@@ -22,11 +22,11 @@ export class DepartmentComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
 
   constructor(private service: DepartmentService) {
-
-    this.service.getDepartments()
+    let self =this;
+    self.service.getDepartments()
     .then((response) =>{
-      this.departments = response;
-      this.dtTrigger.next();
+      self.departments = response;
+      self.dtTrigger.next();
       console.log(response);
     })
     .catch((err) => {
@@ -40,46 +40,47 @@ export class DepartmentComponent implements OnInit {
 
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
       dtInstance.destroy();
-      // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
   }
 
   refreshModel=()=>{
-    this.departmentId = '';
-    this.departmentName = '';
-    this.departmentDescription = '';
-    this.departmentLocation = '';
+    let self =this;
+    self.departmentId = '';
+    self.departmentName = '';
+    self.departmentDescription = '';
+    self.departmentLocation = '';
   }
   saveDepartment(){
-    if (this.departmentId !== '') {
-      this.editDepartment();
+    let self =this;
+    if (self.departmentId !== '') {
+      self.editDepartment();
     }
     else{
-      this.addDepartment();
+      self.addDepartment();
     }
   }
   editDepartment(){
+    let self =this;
+    self.departmentId;
     var date = new Date();
-    var dateString = date.getDate() + '/' + date.getMonth() + 1 + '/' + date.getFullYear();
-      this.service.updateDepartment({
-        "id":this.departmentId,
-        "deptName": this.departmentName,
-        "deptDescription": this.departmentDescription,
-        "deptLocation": this.departmentLocation,
-        "deptCreatedDate": dateString,
-        "deptCreatedBy": "userName",
-        "deptUpdatedDate": dateString,
-        "deptUpdatedBy": "userName",
-        "deptActive": "1"
-      })
+    var dateString = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+    self.service.updateDepartment({
+        "name": self.departmentName,
+        "description": self.departmentDescription,
+        "location": self.departmentLocation,
+        "createdDate": dateString,
+        "createdBy": "userName",
+        "updatedDate": dateString,
+        "updatedBy": "userName",
+        "active": "1"
+      },self.departmentId)
       .subscribe(response => {
-        this.displayModal = false;
-        var department = this.departments.filter((department : any) => department.id == this.departmentId ? department : null);
-        this.departments[this.departments.indexOf(department[0])] = response;
-        this.rerender();
+        self.displayModal = false;
+        var department = self.departments.filter((department : any) => department.deptId == self.departmentId ? department : null);
+        self.departments[self.departments.indexOf(department[0])] = response;
+        self.rerender();
         alert('Successfully Updated!');
       }, err => {
         console.log(err);
@@ -87,49 +88,52 @@ export class DepartmentComponent implements OnInit {
   }
 
   addDepartment(){
+    let self =this;
     var date = new Date();
-    var dateString = date.getDate() + '/' + date.getMonth() + 1 + '/' + date.getFullYear();
-    this.service.addDepartment({
-      "deptName": this.departmentName,
-      "deptDescription": this.departmentDescription,
-      "deptLocation": this.departmentLocation,
-      "deptCreatedDate": dateString,
-      "deptCreatedBy": "userName",
-      "deptUpdatedDate": dateString,
-      "deptUpdatedBy": "userName",
-      "deptActive": "1"
+    var dateString = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+    self.service.addDepartment({
+      "name": self.departmentName,
+      "description": self.departmentDescription,
+      "location": self.departmentLocation,
+      "createdDate": dateString,
+      "createdBy": "userName",
+      "updatedDate": dateString,
+      "updatedBy": "userName",
+      "active": "1"
   })
   .subscribe(response => {
-    this.departments.push(response);
-    this.displayModal = false;
-    this.rerender();
+    self.departments.push(response);
+    self.displayModal = false;
+    self.rerender();
     alert('Successfully Added!');
   }, err => {
     console.log(err);
   });
 }
   
-  
   loadDepartment = (id: string) => {
-      this.service.getDepartments(id)
+    let self =this;
+    self.service.getDepartments(id)
       .then((response : any) =>{
-        this.departmentName = response.deptName;
-        this.departmentDescription = response.deptDescription;
-        this.departmentLocation = response.deptLocation;
-        this.departmentId = response.id;
+        self.departmentName = response.name;
+        self.departmentDescription = response.description;
+        self.departmentLocation = response.location;
+        self.departmentId = response.deptId;
       })
       .catch((err) => {
         console.log(err);
      }
       )
+
   }
   
   deleteDepartment(id:string, name:string, index: number) {
+    let self =this;
     if (confirm('Sure you want to delete '+ name +' Department ?')) {
-        this.service.deleteDepartment(id)
+      self.service.deleteDepartment(id)
         .subscribe(response => {
-          this.departments.splice(index, 1);
-          this.rerender();
+          self.departments.splice(index, 1);
+          self.rerender();
         }, err => {
           console.log(err);
         });

@@ -7,24 +7,39 @@ import { Injectable } from '@angular/core';
 export class EmployeeService {
 
   url = 'http://localhost:8082/employee/';
+  loginUrl = "http://localhost:8082/userLogin/"
   constructor(private http: HttpClient) { }
 
   getEmployees = (id?: string) => {
+    let self = this;
     if (id) {
-      return this.http.get(this.url + id);
+      return self.http.get(this.url + id);
     } else {
-      return this.http.get(this.url);
+      return self.http.get(this.url);
     }
   }
 
   addEmployee = (data : any) => {
-    return this.http.post(this.url, data);
+    let self = this;
+    return self.http.post(this.url, data);
   }
 
-  updateEmployee= (data : any) => {
-    return this.http.put(this.url, data);
+  updateEmployee= (data : any, id:any) => {
+    let self = this;
+    return self.http.put(this.url+id, data);
   }
 
   deleteEmployee = (id: string) => {
-    return this.http.delete(this.url + id);
-  }}
+    let self = this;
+    return self.http.delete(this.url + id);
+  }
+
+  getLogIn = (id :string) => {
+    let self = this;
+    return self.http.get(this.loginUrl+id);
+  }
+  editLogIn = (data : any, id:any) => {
+    let self = this;
+    return self.http.put(this.loginUrl+id, data);
+  }
+}

@@ -5,19 +5,22 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ReportService {
-  url = 'http://localhost:8082/employee/';
+  url = 'http://localhost:8082/report/';
   constructor(private http: HttpClient) { }
   getCount = () =>{
     return this.http.get(this.url+'count')
     .toPromise();
   }
 
-  getSummary = () =>{
-    return this.http.get(this.url+'summary');
+  getDeptSummary = () =>{
+    return this.http.get(this.url+'empSummary');
+  } 
+  getProSummary = () =>{
+    return this.http.get(this.url+'proSummary');
   } 
 
   getDetails = () =>{
-    return this.http.get(this.url+'details');
+    return this.http.get(this.url+'empAllDetails');
   }
   
 }

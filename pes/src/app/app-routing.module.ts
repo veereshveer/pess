@@ -5,6 +5,11 @@ import { DepartmentComponent } from './route-components/department/department.co
 
 const routes: Routes = [
   {
+    path: 'login',
+    component: AdminLoginComponent
+
+  },
+  {
     path: '',
     component: DepartmentComponent
 
