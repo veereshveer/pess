@@ -20,6 +20,7 @@ export class ProjectService {
 
   addProject = (data: any) => {
     let self = this;
+    console.log(data);
     return self.http.post(self.url, data);
   }
 

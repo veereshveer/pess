@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EmployeeComponent } from './employee.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { RouterModule, Routes } from '@angular/router';
@@ -25,6 +25,7 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     DataTablesModule,
+    ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot()
   ]
 })

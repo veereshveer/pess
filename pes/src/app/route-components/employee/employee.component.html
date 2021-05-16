@@ -11,16 +11,12 @@
                     <div class="form-group col-xs-12 col-md-12 col-lg-12">
                         <label class="control-label" for="employeeUserName"> Employee UserName *</label>
                         <input type="text" [(ngModel)]="employeeUserName" name="employeeUserName" id="employeeUserName"
-                            class="form-control" maxlength="128" placeholder="Provide Employee User Name"
-                            data-required-error="This is a mandatory field" required />
-                        <div class="help-block with-errors"></div>
+                            class="form-control"  placeholder="Provide Employee User Name" />
                     </div>
                     <div class="form-group col-xs-12 col-md-12 col-lg-12">
                         <label class="control-label" for="employeePassword">Employee PassWord *</label>
                         <input type="text" [(ngModel)]="employeePassword" name="employeePassword" id="employeePassword"
-                            class="form-control" maxlength="128" placeholder="Provide employee password"
-                            data-required-error="This is a mandatory field" required />
-                        <div class="help-block with-errors"></div>
+                            class="form-control" placeholder="Provide employee password"/>
                     </div>
                     <input type="hidden" [(ngModel)]="employeeId" name="employeeId" />
                 </div>
@@ -28,12 +24,10 @@
                     <button type="button" class="btn btn-secondary" (click)="logInModel = false">Cancel</button>
                     <button type="button" class="btn btn-primary" (click)="saveLogIn()">Save</button>
                 </div>
-            <!-- </form> -->
         </div>
     </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" [ngClass]="{'show': displayModal}">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -43,21 +37,16 @@
                     <span (click)="displayModal = false" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!-- <form name="registerNewEmployeeForm" id="registerNewEmployeeForm"> -->
                 <div class="modal-body">
                     <div class="form-group col-xs-12 col-md-12 col-lg-12">
                         <label class="control-label" for="employeename">New Employee Name *</label>
                         <input type="text" [(ngModel)]="employeeName" name="employeename" id="employeename"
-                            class="form-control" maxlength="128" placeholder="Provide full name of the Employee"
-                            data-required-error="This is a mandatory field" required />
-                        <div class="help-block with-errors"></div>
+                            class="form-control" placeholder="Provide full name of the Employee"/>
                     </div>
                     <div class="form-group col-xs-12 col-md-12 col-lg-12">
                         <label class="control-label" for="employeeEmail">Employee emailId *</label>
                         <input type="text" [(ngModel)]="employeeEmail" name="employeeEmail" id="employeeEmail"
-                            class="form-control" maxlength="128" placeholder="Provide description"
-                            data-required-error="This is a mandatory field" required />
-                        <div class="help-block with-errors"></div>
+                            class="form-control" maxlength="128" placeholder="Provide description" />
                     </div>
                     <div class="form-group col-xs-12 col-md-12 col-lg-12">
                         <h6>Select Project</h6>
@@ -80,7 +69,6 @@
                     <button type="button" class="btn btn-secondary" (click)="displayModal = false">Cancel</button>
                     <button type="button" class="btn btn-primary" (click)="saveEmployee()">Save</button>
                 </div>
-            <!-- </form> -->
         </div>
     </div>
 </div>
@@ -114,7 +102,3 @@
         </tbody>
     </table>
 </div>
-
-<!-- <ejs-multiselect></ejs-multiselect> -->
-
-<!-- <ejs-multiselect id='localData' #local [dataSource]='countries' [fields]='localFields' [placeholder]='localWaterMark' [value]='value'></ejs-multiselect>  -->

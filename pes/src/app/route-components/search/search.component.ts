@@ -46,6 +46,7 @@ export class SearchComponent implements OnInit {
     self.resultModel=true;
     self.display="";
   }, (err) => {
+    alert("No Data Found");
     console.log(err);
     self.display="";
   })

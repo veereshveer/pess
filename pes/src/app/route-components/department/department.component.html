@@ -9,33 +9,46 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                    <label class="control-label" for="entomodepartmentname">New Department Name *</label>
-                    <input type="text" [(ngModel)]="departmentName" name="entomodepartmentname"
-                        id="entomodepartmentname" class="form-control" maxlength="128"
-                        placeholder="Provide full name of the department"
-                        data-required-error="This is a mandatory field" required />
-                    <div class="help-block with-errors"></div>
-                </div>
-                <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                    <label class="control-label" for="departmentdescription">Department designation *</label>
-                    <input type="text" [(ngModel)]="departmentDescription" name="departmentdescription"
-                        id="departmentdescription" class="form-control" maxlength="128"
-                        placeholder="Provide description" data-required-error="This is a mandatory field" required />
-                    <div class="help-block with-errors"></div>
-                </div>
-                <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                    <label class="control-label" for="departmentlocation">Department location *</label>
-                    <input type="text" [(ngModel)]="departmentLocation" name="departmentlocation"
-                        id="departmentlocation" class="form-control" maxlength="64"
-                        placeholder="Provide location of the department" data-required-error="This is a mandatory field"
-                        required />
-                    <div class="help-block with-errors"></div>
-                </div>
-                <input type="hidden" [(ngModel)]="departmentId" name="departmentId" />
+                <form class="form-group" [formGroup]="departform">
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="entomodepartmentname">New Department Name *</label>
+                        <input  type="text"  class="form-control" formControlName="name" [ngClass]="{'is-invalid': submitted && h.name.errors }"
+                             name="name" id="name"
+                            placeholder="Provide full name of the department" />
+                        <div *ngIf="h.name.touched && h.name.errors" class="text-danger">
+                            <div *ngIf="h.name.errors.required">
+                                Department name is requried
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="departmentdescription">Department Description *</label>
+                        <input formControlName="description"
+                            [ngClass]="{'is-invalid': submitted && h.description.errors }" type="text"
+                            name="description" id="description" class="form-control"
+                            placeholder="Provide description" />
+                        <div *ngIf="h.description.touched && h.description.errors" class="text-danger">
+                            <div *ngIf="h.description.errors.required">
+                                Department Description is requried
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="departmentlocation">Department location *</label>
+                        <input formControlName="location" [ngClass]="{'is-invalid': submitted && h.location.errors }"
+                            type="text" name="location" id="location" class="form-control"
+                            placeholder="Provide location of the department" />
+                        <div *ngIf="h.location.touched && h.location.errors" class="text-danger">
+                            <div *ngIf="h.location.errors.required">
+                                Department Location is requried
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" formControlName="deptId" name="departmentId" />
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="displayModal = false">Cancel</button>
+                <button type="button" class="btn btn-secondary" (click)="onReset()">Cancel</button>
                 <button type="button" class="btn btn-primary" (click)="saveDepartment()">Save</button>
             </div>
         </div>

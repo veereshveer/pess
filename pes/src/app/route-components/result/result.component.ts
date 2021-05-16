@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { Chart } from 'angular-highcharts';
+import { Subject } from 'rxjs/internal/Subject';
 import { ReportService } from '../report/report.service';
 import { ResultService } from './result.service';
 
@@ -8,6 +10,7 @@ import { ResultService } from './result.service';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss']
 })
+
 export class ResultComponent implements OnInit {
   public deptSummary: any;
   public resultAllDeatil: any;
@@ -27,6 +30,11 @@ export class ResultComponent implements OnInit {
   public joinData: number[] = [];
   public joinDate: string[] = [];
 
+  @ViewChild(DataTableDirective)
+  dtElement!: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+
   constructor(private service: ResultService, private reportService: ReportService) {
     let self = this;
     self.getAllDeatils();
@@ -38,11 +46,21 @@ export class ResultComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  rerender(): void {
+    let self = this;
+    self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      self.dtTrigger.next();
+    });
+  } 
+
   getAllDeatils = () => {
     let self = this;
     self.reportService.getDetails()
       .subscribe((response) => {
         self.resultAllDeatil = response;
+        self.dtTrigger.next();
+        self.rerender();
       }, (err) => {
         console.log(err);
       }
@@ -113,6 +131,7 @@ export class ResultComponent implements OnInit {
       colors: ['cadetblue', 'red', 'green'],
     });
   }
+  
   loadJoinChart(data: any, date: any) {
     let  self  = this;
     self.empByJoinChart = new Chart({

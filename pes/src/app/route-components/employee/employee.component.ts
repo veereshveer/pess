@@ -18,12 +18,12 @@ export class EmployeeComponent implements OnInit {
   public projectListId: any;
   public dropdownSettings !: IDropdownSettings;
   public displayModal :boolean= false;
-  public employeeId: any;
+  public employeeId: String ='';
   public employeeName: String ='';
   public employeeEmail: String='';
   public deptSelected: String='';
   public employees: any;
-  public deptlist: any;
+  public deptlist: any=[];
   public projects: any;
   public projectsList: any;
   public employeeUserName:String='';

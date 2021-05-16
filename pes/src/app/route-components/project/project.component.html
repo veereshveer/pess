@@ -8,26 +8,35 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                    <label class="control-label" for="projectName">New Project Name *</label>
-                    <input type="text" [(ngModel)]="projectName" name="projectName" id="projectName"
-                        class="form-control" maxlength="128" placeholder="Provide project name"
-                        data-required-error="This is a mandatory field" required />
-                    <div class="help-block with-errors"></div>
-                </div>
-                <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                    <label class="control-label" for="projectdescription">project designation *</label>
-                    <input type="text" [(ngModel)]="projectDescription" name="projectdescription"
-                        id="projectdescription" class="form-control" maxlength="128"
-                        placeholder="Provide project description" data-required-error="This is a mandatory field"
-                        required />
-                    <div class="help-block with-errors"></div>
-                </div>
-                <input type="hidden" [(ngModel)]="projectId" name="projectId" />
-                <input type="hidden" [(ngModel)]="projectCode" name="projectCode" />
+                <form class="form-group" [formGroup]="projectform" name="projectform">
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="projectName">New Project Name *</label>                     
+                        <input formControlName="projectName" [ngClass]="{'is-invalid': submitted && h.projectName.errors }"
+                            type="text"  name="projectName" id="projectName"
+                            class="form-control" placeholder="Provide project name" />
+                        <div *ngIf="h.projectName.touched && h.projectName.errors" class="text-danger">
+                            <div *ngIf="h.projectName.errors.required">
+                                Project name is requried
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-12 col-lg-12">
+                        <label class="control-label" for="projectdescription">project designation *</label>
+                        <input formControlName="projectdescription"
+                            [ngClass]="{'is-invalid': submitted && h.projectdescription.errors }" type="text"
+                            name="projectdescription" id="projectdescription"
+                            class="form-control" placeholder="Provide project description" />
+                        <div *ngIf="h.projectdescription.touched && h.projectdescription.errors" class="text-danger">
+                            <div *ngIf="h.projectdescription.errors.required">
+                                Project Description is requried
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" formControlName="projectId" name="projectId" />
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="displayModal = false">Cancel</button>
+                <button type="button" class="btn btn-secondary" (click)="onReset()">Cancel</button>
                 <button type="button" class="btn btn-primary" (click)="saveProject()">Save</button>
             </div>
         </div>

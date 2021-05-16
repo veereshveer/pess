@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ResultComponent } from './result.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartModule } from 'angular-highcharts';
+import { DataTablesModule } from 'angular-datatables';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    ChartModule
+    ChartModule,  
+    DataTablesModule
   ]
 })
 export class ResultModule { }

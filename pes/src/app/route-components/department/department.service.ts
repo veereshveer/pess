@@ -22,6 +22,7 @@ export class DepartmentService {
   }
 
   addDepartment = (data : any) => {
+    console.log(data);
     let self = this;
     return self.http.post(this.url, data);
   }

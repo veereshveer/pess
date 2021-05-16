@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from './report.service';
 import { Chart } from 'angular-highcharts';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs/internal/Subject';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -11,23 +14,35 @@ import { Chart } from 'angular-highcharts';
 
 export class ReportComponent implements OnInit {
 
-  public counts: any=[];
-  public dtTrigger: any;
-  public proSummary: any=[];
-  public deptSummary: any=[];
-  public details: any=[];
+  public counts: any = [];
+  public proSummary: any = [];
+  public deptSummary: any = [];
+  public details: any = [];
   public chart: any;
-  public data: any=[];
+  public data: any = [];
+
+  @ViewChild(DataTableDirective)
+  dtElement!: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
 
   constructor(private service: ReportService) {
-    let slef = this;
-    slef.loadcount();
-    slef.loadDeptSummary();
-    slef.loadProSummary();
-    slef.loadDetails();
+    let self = this;
+    self.loadcount();
+    self.loadDeptSummary();
+    self.loadProSummary();
+    self.loadDetails();
   }
 
   ngOnInit(): void {
+  }
+
+  rerender(): void {
+    let self = this;
+    self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      self.dtTrigger.next();
+    });
   }
 
   loadcount = () => {
@@ -72,6 +87,7 @@ export class ReportComponent implements OnInit {
       .subscribe((response) => {
         self.details = response;
         console.log(response);
+        this.dtTrigger.next();
       }, (err) => {
         console.log(err);
       })
@@ -107,4 +123,5 @@ export class ReportComponent implements OnInit {
       colors: ['cadetblue', 'red', 'green'],
     });
   }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs/internal/Subject';
 import { DepartmentService } from './department.service';
@@ -8,21 +9,26 @@ import { DepartmentService } from './department.service';
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.scss']
 })
+
 export class DepartmentComponent implements OnInit {
-  displayModal:boolean = false;
-  departmentId : String = '';
-  departmentName: String = '';
-  departmentDescription: String = '';
-  departmentLocation : String = '';
-  departments: any=[];
+  public displayModal:boolean = false;
+  public departmentId : String = '';
+  public departmentName: String = '';
+  public departmentDescription: String = '';
+  public departmentLocation : String = '';
+  public departments: any=[];
+  public departform: FormGroup;
+  public submitted=false;
 
   @ViewChild(DataTableDirective)
   dtElement!: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private service: DepartmentService) {
+  constructor(private service: DepartmentService, private validation: FormBuilder) {
     let self =this;
+    this.departform=self.validation.group({
+    })
     self.service.getDepartments()
     .then((response) =>{
       self.departments = response;
@@ -36,6 +42,22 @@ export class DepartmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.departform=this.validation.group({​​​​​​​​
+      name:["",[Validators.required]],
+      description:["",[Validators.required]],
+      location:["",[Validators.required]],  
+      deptId:["",[Validators.required]]
+    }​​​​​​​​)
+  }
+
+  get h(){
+    return this.departform.controls; 
+  }
+   
+  onReset(){
+    this.submitted=false;
+    this.displayModal = false;
+    this.departform.reset();
   }
 
   rerender(): void {
@@ -47,38 +69,45 @@ export class DepartmentComponent implements OnInit {
 
   refreshModel=()=>{
     let self =this;
-    self.departmentId = '';
-    self.departmentName = '';
-    self.departmentDescription = '';
-    self.departmentLocation = '';
+    this.departform=this.validation.group({​​​​​​​​
+      name:["",[Validators.required]],
+      description:["",[Validators.required]],
+      location:["",[Validators.required]],  
+      deptId:["",[Validators.required]]
+    }​​​​​​​​)
   }
+
   saveDepartment(){
+    console.log(this.departform.value.deptId);
     let self =this;
-    if (self.departmentId !== '') {
+    self.submitted=true;
+
+    if (this.departform.value.deptId !== '') {
       self.editDepartment();
     }
     else{
       self.addDepartment();
     }
   }
+  
   editDepartment(){
     let self =this;
-    self.departmentId;
+    console.log(self.departform.value.name);
     var date = new Date();
     var dateString = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
     self.service.updateDepartment({
-        "name": self.departmentName,
-        "description": self.departmentDescription,
-        "location": self.departmentLocation,
+        "name":self.departform.value.name,
+        "description": self.departform.value.description,
+        "location": self.departform.value.location,
         "createdDate": dateString,
         "createdBy": "userName",
         "updatedDate": dateString,
         "updatedBy": "userName",
         "active": "1"
-      },self.departmentId)
+      },self.departform.value.deptId)
       .subscribe(response => {
         self.displayModal = false;
-        var department = self.departments.filter((department : any) => department.deptId == self.departmentId ? department : null);
+        var department = self.departments.filter((department : any) => department.deptId == self.departform.value.deptId ? department : null);
         self.departments[self.departments.indexOf(department[0])] = response;
         self.rerender();
         alert('Successfully Updated!');
@@ -89,12 +118,13 @@ export class DepartmentComponent implements OnInit {
 
   addDepartment(){
     let self =this;
+    console.log(this.departform.value.name);
     var date = new Date();
     var dateString = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
     self.service.addDepartment({
-      "name": self.departmentName,
-      "description": self.departmentDescription,
-      "location": self.departmentLocation,
+      "name": this.departform.value.name,
+      "description": this.departform.value.description,
+      "location": this.departform.value.location,
       "createdDate": dateString,
       "createdBy": "userName",
       "updatedDate": dateString,
@@ -115,16 +145,16 @@ export class DepartmentComponent implements OnInit {
     let self =this;
     self.service.getDepartments(id)
       .then((response : any) =>{
-        self.departmentName = response.name;
-        self.departmentDescription = response.description;
-        self.departmentLocation = response.location;
-        self.departmentId = response.deptId;
+     self.departform = new FormGroup({
+          name: new FormControl(response.name),
+          description: new FormControl(response.description),
+          location: new FormControl(response.location),
+          deptId :new FormControl(response.deptId)
+         });
       })
       .catch((err) => {
         console.log(err);
-     }
-      )
-
+     })
   }
   
   deleteDepartment(id:string, name:string, index: number) {

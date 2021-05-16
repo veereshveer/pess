@@ -6,16 +6,19 @@ import { Router } from '@angular/router';
   templateUrl: './admin-login.component.html',
   styleUrls: ['./admin-login.component.scss']
 })
+
 export class AdminLoginComponent implements OnInit {
-  username: any;
-  password: any;
+  public username: String = '';
+  public password: String = '';
 
   verifyUser() {
-    if (this.username == "veeresh" && this.password == "veeresh123") {
+    let  self = this;
+    if (self.username == "veeresh" && self.password == "veeresh123") {
      alert("user is valid");
-     this.router.navigate(['list-user']);
+     self.router.navigate(['list-user']);
     } else alert("user is invalid");
   }
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {

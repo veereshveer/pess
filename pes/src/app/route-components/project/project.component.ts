@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs/internal/Subject';
 import { ProjectService } from './project.service';
@@ -10,19 +11,21 @@ import { ProjectService } from './project.service';
 })
 
 export class ProjectComponent implements OnInit {
-  displayModal: boolean = false;
-  projectId: String = "";
-  projectCode: String = '';
-  projectName: String = '';
-  projectDescription: String = '';
-  projects: any = [];
+  public displayModal: boolean = false;
+  public projectId: String = "";
+  public projectCode: String = '';
+  public projectName: String = '';
+  public projectDescription: String = '';
+  public projects: any = [];
+  public projectform: FormGroup;
+  public submitted:boolean = false;
 
   @ViewChild(DataTableDirective)
   dtElement!: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private service: ProjectService) {
+  constructor(private service: ProjectService, private proValid: FormBuilder) {
     let self = this;
     self.service.getProjects()
       .subscribe((response) => {
@@ -32,9 +35,26 @@ export class ProjectComponent implements OnInit {
       }, (err) => {
         console.log(err);
       })
-  }
+      this.projectform = this.proValid.group({
+      })
+  } 
 
   ngOnInit(): void {
+    this.projectform = this.proValid.group({
+      projectName: ["", [Validators.required]],
+      projectdescription: ["", Validators.required],
+      projectId: ["", Validators.required]
+    })
+  }
+
+  get h() {
+    return this.projectform.controls;
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.displayModal = false;
+    this.projectform.reset();
   }
 
   rerender(): void {
@@ -47,14 +67,14 @@ export class ProjectComponent implements OnInit {
 
   refreshModel = () => {
     let self = this;
-    self.projectId = '';
-    self.projectName = '';
-    self.projectDescription = '';
+
   }
 
   saveProject() {
     let self = this;
-    if (self.projectId !== '') {
+    console.log(self.projectform.value.projectId);
+    self.submitted=true;
+       if (self.projectform.value.projectId !== '') {
       self.editProject();
     }
     else {
@@ -67,18 +87,18 @@ export class ProjectComponent implements OnInit {
     var date = new Date();
     var dateString = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
     self.service.updateProject({
-      "projectCode": self.projectCode,
-      "name": self.projectName,
-      "description": self.projectDescription,
+      "projectCode": "",
+      "name": self.projectform.value.projectName,
+      "description": self.projectform.value.projectdescription,
       "createdDate": dateString,
       "createdBy": "userName",
       "updatedDate": dateString,
       "updatedBy": "userName",
       "active": "1"
-    }, self.projectId)
+    }, self.projectform.value.projectId)
       .subscribe(response => {
         self.displayModal = false;
-        var project = self.projects.filter((project: any) => project.projectId == self.projectId ? project : null);
+        var project = self.projects.filter((project: any) => project.projectId == self.projectform.value.projectId ? project : null);
         self.projects[self.projects.indexOf(project[0])] = response;
         self.rerender();
         alert('Successfully Updated!');
@@ -88,13 +108,14 @@ export class ProjectComponent implements OnInit {
   }
 
   addProject() {
+
     let self = this;
     var date = new Date();
     var dateString = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
     self.service.addProject({
       "projectCode": "",
-      "name": self.projectName,
-      "description": self.projectDescription,
+      "name": self.projectform.value.projectName,
+      "description": self.projectform.value.projectdescription,
       "createdDate": dateString,
       "createdBy": "userName",
       "updatedDate": dateString,
@@ -115,10 +136,11 @@ export class ProjectComponent implements OnInit {
     let self = this;
     self.service.getProjects(id)
       .subscribe((response: any) => {
-        self.projectName = response.name;
-        self.projectDescription = response.description;
-        self.projectId = response.projectId;
-        self.projectCode = response.projectCode;
+        self.projectform = new FormGroup({
+          projectName: new FormControl(response.name),
+          projectdescription: new FormControl(response.description),
+          projectId: new FormControl(response.projectId)
+         });
       }, (err) => {
         console.log(err);
       })
