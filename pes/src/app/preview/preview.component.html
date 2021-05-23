@@ -1,1 +1,127 @@
-<p>preview works!</p>
+<div class="row">
+    <div class="col-lg-8 col-md-8"></div>
+    <div class="col-lg-1">
+      <button
+        class="btn btn-outline-dark btn-md fa-pull-right"
+        id="preview"
+        (click)="preview()"
+      >
+        <a class="fas fa-eye"> Preview</a>
+      </button>
+    </div>
+  </div>
+  <br />
+  <div class="row" *ngIf="!isCollapsed">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="card">
+        <p class="no.ofQ"></p>
+        <div>Total no.of Questions:</div>
+        <!-- <p class="time">Time:</p> -->
+        <div class="card" id="question-margin">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12" id="fas">
+                      <a class="fas fa-edit hover" style="padding-right: 10px;" ></a>
+                      <a class="fas fa-trash hover" style="padding-right: 10px;"> </a>
+                      <a class="fa fa-clone hover" style="padding-right: 10px;"> </a>
+                      
+                  </div>
+                  
+              </div>
+            <Label>1.What is your name ?</Label>
+            <ul>
+              <input type="radio" id="q0" name="question1" value ="option1" [(ngModel)]="answer" />  option 1<br>
+              <input type="radio" id="q0" name="question1" value ="option2" [(ngModel)]="answer"  />  option 2<br>
+              <input type="radio" id="q0" name="question1" value ="option3" [(ngModel)]="answer"  />  option 3<br>
+              <input type="radio" id="q0" name="question1" value ="option4" [(ngModel)]="answer" />  option 4<br>
+  
+              You have selected :{{answer}}
+            </ul>
+          </div>
+        </div>
+        <div class="card" id="question-margin">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12" id="fas">
+                      <a class="fas fa-edit hover"style="padding-right: 10px;" ></a>
+                      <a class="fas fa-trash hover" style="padding-right: 10px;"> </a>
+                      <a class="fa fa-clone hover" style="padding-right: 10px;"> </a>
+                      
+                  </div>
+                  
+              </div>
+            <Label>2.What is your age ?</Label>
+            <ul>
+              <input type="checkbox" id="q2" name="question1"  [(ngModel)]="checkbox" /> checkbox 1<br />
+              <input type="checkbox" id="q2" name="question1"  [(ngModel)]="checkbox"  />checkbox 2<br />
+              <input type="checkbox" id="q2" name="question1"  [(ngModel)]="checkbox" />check box 3<br />
+              <input type="checkbox" id="q2" name="question1"  [(ngModel)]="checkbox"  />checkbox 4<br />
+              You have selected :{{checkbox}}
+            </ul>
+          </div>
+        </div>
+  
+        <div class="card" id="question-margin" >
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12" id="fas">
+                      <a class="fas fa-edit hover" style="padding-right: 10px;" > </a>
+                      <a class="fas fa-trash hover" style="padding-right: 10px;" (click)="delete()"> </a>
+                      <a class="fa fa-clone hover" style="padding-right: 10px;"> </a>
+  
+                  </div>
+                  
+              </div>
+            <Label>2.  Which department ?</Label>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+  
+              </div>
+              <div class="panel-body">
+  
+                  <ng-multiselect-dropdown 
+                  [placeholder]="'Summary '"
+                  [settings]="dropdownSettings"
+                  [data]="dropdownList" 
+                  (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                      
+                  </ng-multiselect-dropdown>
+  
+              </div>
+  
+          </div>
+  
+          </div>
+        </div>
+       
+  
+  
+  
+        <div class="card" id="question-margin">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12" id="fas">
+                      <a class="fas fa-edit hover" style="padding-right: 10px;" > </a>
+                      <a class="fas fa-trash hover" style="padding-right: 10px;"> </a>
+                      <a class="fa fa-clone hover" style="padding-right: 10px;"> </a>
+  
+                  </div>
+                  
+              </div>
+            <Label>2. Answer in short answer ?</Label>
+            <ul>
+              <textarea type="text" id="q1" name="question1" value ="option1" [(ngModel)]="short" placeholder="enter the text here" rows="2" cols="70" ></textarea><br />
+              <!-- <input type="text" id="q1" name="question1" value ="option2" [(ngModel)]="answer" /><br />
+              <input type="text" id="q1" name="question1" value ="option3" [(ngModel)]="answer"  /><br />
+              <input type="text" id="q1" name="question1" value ="option4" [(ngModel)]="answer" /><br /> -->
+            </ul>
+          </div>
+        </div>
+  
+  
+      </div>
+    </div>
+  </div>
+  
