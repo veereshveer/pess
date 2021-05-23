@@ -11,13 +11,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentComponent } from './route-components/department/department.component';
 import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
+import { PreviewComponent } from './preview/preview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidebarComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    PreviewComponent
    ],
   imports: [
     BrowserModule,
